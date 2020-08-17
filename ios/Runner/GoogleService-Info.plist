@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>661293114707-b7pvl3cjrm90e6nu6e03o3qe9o826a7q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.661293114707-b7pvl3cjrm90e6nu6e03o3qe9o826a7q</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCnPpdCOk6ZuoRN1j4vPsYo9d27YiVsl94</string>
+	<key>GCM_SENDER_ID</key>
+	<string>661293114707</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hyunmin.donation</string>
+	<key>PROJECT_ID</key>
+	<string>donation-7f0af</string>
+	<key>STORAGE_BUCKET</key>
+	<string>donation-7f0af.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:661293114707:ios:35d0f41f3ef98064a06da6</string>
+	<key>DATABASE_URL</key>
+	<string>https://donation-7f0af.firebaseio.com</string>
+</dict>
+</plist>
