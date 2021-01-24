@@ -1,24 +1,61 @@
-import 'package:donation/screens/HomeScreen.dart';
+import 'package:donation/models/User.dart';
+import 'package:donation/providers/DatabaseProvider.dart';
+import 'package:donation/providers/IndexProvider.dart';
+import 'package:donation/screens/AdScreen.dart';
 import 'package:donation/screens/ProfileScreen.dart';
+import 'package:donation/services/DeviceService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-void main() {
-  runApp(MyApp());
+import 'dart:async';
+
+import 'package:provider/provider.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // firestore 초기화
+  IndexProvider ip = IndexProvider();
+  ip.initFireStore();
+  final DeviceService ds = DeviceService();
+  String deviceId = await ds.getId();
+  runApp(MyApp(deviceId: deviceId));
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  MyApp({this.deviceId});
+
+  final String deviceId;
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  DatabaseProvider db = DatabaseProvider();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'donation app',
-      home: PageViewScreen(),
+    return MultiProvider(
+      providers: [
+        FutureProvider<User>.value(
+          value: db.getUserIfExist(widget.deviceId),
+        )
+      ],
+      child: GetMaterialApp(
+        title: 'donation app',
+        theme: ThemeData(
+          primaryColor: Color.fromRGBO(75, 0, 130, 1),
+        ),
+        home: PageViewScreen(),
+      ),
     );
   }
 }
 
 class PageViewScreen extends StatefulWidget {
+  PageViewScreen();
+
   @override
   _PageViewScreenState createState() => _PageViewScreenState();
 }
@@ -37,7 +74,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -59,18 +95,15 @@ class _PageViewScreenState extends State<PageViewScreen> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 375, height: 812);
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: PageView(
         onPageChanged: (index) {
           pageChanged(index);
         },
         controller: _controller,
         children: [
-          HomeScreen(),
-          Text('chart'),
-//          Container(child: Text('profile')),
           ProfileScreen(),
+          AdScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -79,11 +112,10 @@ class _PageViewScreenState extends State<PageViewScreen> {
           bottomTapped(index);
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('홈')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.show_chart), title: Text('차트')),
           BottomNavigationBarItem(
               icon: Icon(Icons.person), title: Text('내 정보')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.ondemand_video), title: Text('광고')),
         ],
       ),
     );

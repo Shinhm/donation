@@ -1,41 +1,52 @@
+import 'package:donation/components/Profile/ProfileInfo.dart';
+import 'package:donation/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
+  ProfileScreen();
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  List donationList = [
+    {'name': '후원1'},
+    {'name': '후원2'},
+    {'name': '후원3'},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-          height: ScreenUtil().setHeight(100),
-          child: Row(
-            children: [
-              Container(
-                  width: ScreenUtil().setWidth(100),
-                  child: Icon(
-                    Icons.account_circle,
-                    size: ScreenUtil().setSp(50),
-                  )),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text('광고 시청수 : 30'),
-                  Text('누적 후원금액 : 1,000원'),
-                ],
-              )
-            ],
+    return Consumer<User>(
+      builder: (context, user, child) => Stack(
+        children: [
+          Container(
+            height: ScreenUtil().setHeight(100),
+            child: ProfileInfo(
+              user: user,
+            ),
           ),
-        ),
-        ListTile(
-          title: Text('테스트'),
-        )
-      ],
+          Container(
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(100)),
+            child: ListView.builder(
+              itemBuilder: (build, index) {
+                return ListTile(
+                  title: Text(donationList[index]['name'].toString()),
+                );
+              },
+              itemCount: donationList.length,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
